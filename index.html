@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stargazers</title>
+
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<button id="btn-ro">RO</button>
+<button id="btn-all">All</button>
+
+<table class="tablesorter">
+    <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Login</th>
+            <th>Name</th>
+            <th>Bio</th>
+            <th>E-mail</th>
+            <th>Address</th>
+            <th>Hireable</th>
+            <th>Followers</th>
+            <th>Company</th>
+            <th>Profile</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/x-handlebars-template" id="stargazer-row-template">
+    <tr>
+        <td><img class="avatar" src="{{ avatar_url }}" alt="avatar"/></td>
+        <td>{{ login }}</td>
+        <td>{{ name }}</td>
+        <td>{{ bio }}</td>
+        <td>{{ email }}</td>
+        <td>{{ geocoded_location.full_address }}</td>
+        <td>{{ hireable }}</td>
+        <td>{{ followers }}</td>
+        <td>{{ company }}</td>
+        <td><a href="{{ html_url }}">{{ html_url }}</a></td>
+    </tr>
+</script>
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/handlebars-v1.1.2.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
