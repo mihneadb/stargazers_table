@@ -2,9 +2,12 @@ var rowTemplate = Handlebars.compile($('#stargazer-row-template').html());
 
 var $table = $('tbody');
 
+var $spinner = $('#spinner');
+
 
 function populateTable(all) {
     $table.empty();
+    $spinner.show();
     $.getJSON('data.json')
         .success(function (data) {
             data.forEach(function (e) {
@@ -15,6 +18,7 @@ function populateTable(all) {
                 $table.append($row);
             });
 
+            $spinner.hide();
             $('table').tablesorter();
         });
 }
