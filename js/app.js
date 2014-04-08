@@ -4,6 +4,22 @@ var $table = $('tbody');
 
 var $spinner = $('#spinner');
 
+var roNames = [];
+
+function isROName(name) {
+    if (!name) {
+        return false;
+    }
+    var words = name.split(/-|\ /);
+    var r = false;
+    words.forEach(function (w) {
+        var pos = roNames.indexOf(w.toLowerCase());
+        if (pos !== -1) {
+            r = true;
+        }
+    });
+    return r;
+}
 
 function populateTable(all) {
     $table.empty();
@@ -11,8 +27,14 @@ function populateTable(all) {
     $.getJSON('data.json')
         .success(function (data) {
             data.forEach(function (e) {
-                if (!all && (!e.geocoded_location || e.geocoded_location.country != 'Romania')) {
-                    return;
+                if (!all &&
+                    (!e.geocoded_location ||
+                     e.geocoded_location.country !== 'Romania')) {
+                    if (!isROName(e.name)) {
+                        return;
+                    } else if (e.geocoded_location && e.geocoded_location.country !== 'Romania') {
+                        return;
+                    }
                 }
                 var $row = $(rowTemplate(e));
                 $table.append($row);
@@ -31,4 +53,9 @@ $('#btn-all').on('click', function () {
     populateTable(true);
 });
 
-populateTable(false);
+$.getJSON('ro_names.json')
+    .success(function (data) {
+        roNames = data.map(function (e) { return e.toLowerCase(); });
+        populateTable(false);
+    });
+
